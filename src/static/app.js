@@ -1,3 +1,18 @@
+function escapeHtml(str) {
+  return str.replace(/[&<>"'`=\/]/g, function (s) {
+    return ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+      '`': '&#96;',
+      '=': '&#61;',
+      '/': '&#47;'
+    })[s];
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const activitiesList = document.getElementById("activities-list");
   const activitySelect = document.getElementById("activity");
@@ -27,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
           <div class="participants-section">
             <strong>Participants:</strong>
-            ${details.participants.length > 0 ? `<ul class="participants-list">${details.participants.map(p => `<li>${p}</li>`).join('')}</ul>` : '<span class="no-participants">No participants yet</span>'}
+            ${details.participants.length > 0 ? `<ul class="participants-list">${details.participants.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ul>` : '<span class="no-participants">No participants yet</span>'}
           </div>
         `;
 
